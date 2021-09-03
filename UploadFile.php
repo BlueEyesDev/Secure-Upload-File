@@ -23,6 +23,8 @@ class UploadFileSecu {
 
             if (!in_array($this->GetRealExtension($FileData), $AllowedExtension))
                 trigger_error("Unknown Extension", E_USER_ERROR);
+            if (strrpos($contents, "<?php") !== FALSE)
+                trigger_error("Image contains PHP code", E_USER_ERROR);
             
             $RandomFileName = $this->RandomFileName();
             move_uploaded_file($_FILES[$Name]['tmp_name'], "{$DirPath}/{$RandomFileName}.{$Extension}");
